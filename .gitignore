@@ -1,0 +1,8 @@
+# BPF ELF object files
+*.bpf.o
+# Generated vmlinux.h files
+vmlinux.h
+# Generated bpf skeleton headers
+*.bpf.skel.h
+
+

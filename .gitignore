@@ -4,5 +4,7 @@
 vmlinux.h
 # Generated bpf skeleton headers
 *.bpf.skel.h
+# All object files
+*.o
 
 

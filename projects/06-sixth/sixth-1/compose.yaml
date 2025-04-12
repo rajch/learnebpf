@@ -1,0 +1,9 @@
+services:
+  sixthservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    # cap_add:
+    #   - CAP_BPF
+    #   - CAP_PERFMON

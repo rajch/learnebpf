@@ -1,28 +1,31 @@
-TARGET = second
-BPF = $(TARGET).bpf.o
+.PHONY: bpf project skeleton clean load unload
+.DEFAULT_GOAL := bpf
 
-%.bpf.o: %.bpf.c
-	clang -target bpf -c $< -g -O2
+PROJECT = second
+
+$(PROJECT).bpf.o: $(PROJECT).bpf.c vmlinux.h
+	clang -target bpf -g -O2 -c $<
+
+bpf: $(PROJECT).bpf.o
 
 vmlinux.h:
 	sudo bpftool btf dump id 1 format c > vmlinux.h
 
-$(TARGET): main.c 
+$(PROJECT): main.c $(PROJECT).bpf.skel.h 
 	clang -o $@ $< -lbpf
 
+project: $(PROJECT)
 
+$(PROJECT).bpf.skel.h: $(PROJECT).bpf.o
+	bpftool gen skeleton $< > $@
 
-.PHONY: bpf
-bpf: $(BPF) vmlinux.h
+skeleton: $(PROJECT).bpf.skel.h
 
-.PHONY: clean
 clean:
-	rm -f $(BPF) $(TARGET)
+	rm -f $(PROJECT).bpf.o vmlinux.h $(PROJECT).bpf.skel.h $(PROJECT)
 
-.PHONY: load
 load:
-	sudo bpftool prog load $(BPF) /sys/fs/bpf/$(TARGET) autoattach
+	sudo bpftool prog load $(PROJECT).bpf.o /sys/fs/bpf/$(PROJECT)-pin autoattach
 
-.PHONY: unload
 unload:
-	sudo rm /sys/fs/bpf/$(TARGET)
+	sudo rm -f /sys/fs/bpf/$(PROJECT)-pin

@@ -2,8 +2,7 @@
     Sample userspace program
 
     This is a minimal sample that demonstrates how eBPF programs are loaded
-    via a userspace program written in C, using libbpf. You can delete it
-    from your project safely.
+    via a userspace program written in C, using libbpf.
 */
 
 #include <stdio.h>

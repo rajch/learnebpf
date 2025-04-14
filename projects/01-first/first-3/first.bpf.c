@@ -1,7 +1,7 @@
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
 
-SEC("kprobe/__x64_sys_execve")
+SEC("ksyscall/execve")
 int first(void *ctx) {
     int pid = bpf_get_current_pid_tgid() >> 32;
     bpf_printk("BPF program %s called from pid %d", "first", pid);

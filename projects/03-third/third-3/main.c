@@ -16,7 +16,6 @@ void signal_handler(int signum)
 
 void dump_map(struct third_bpf *bpfobj)
 {
-    printf("Dumpamapam...\n");
     char next_key[60] = "";
     char *curr_key = NULL;
     struct counter_record_t value = {};

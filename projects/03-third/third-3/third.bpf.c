@@ -27,7 +27,6 @@ int BPF_KPROBE_SYSCALL(third,
 
     char *argument;
     bpf_probe_read_str(&argument, sizeof(argument), &argv[0]);
-    bpf_printk("Third says that the argument is: %s", argument);
 
     struct counter_record_t current = {};
     int namelength = bpf_probe_read_str(&current.program_name, sizeof(current.program_name), argument);

@@ -1,9 +1,6 @@
 services:
-  bpfmon:
+  thirdservice:
     build:
       context: .
       dockerfile: Dockerfile
-    # privileged: true
-    cap_add:
-      - CAP_BPF
-      - CAP_PERFMON
+    privileged: true
